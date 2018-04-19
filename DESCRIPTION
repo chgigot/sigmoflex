@@ -1,12 +1,17 @@
 Package: sigmoflex
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Proposal to Quantify Differences Between Disease Progress Curves
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: c(
+    person("Christophe", "Gigot", email = "ch.gigot@gmail.com",
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1748-2902")))
+Maintainer: Christophe Gigot <ch.gigot@gmail.com>
+Description: Proposal to quantify differences between disease progress curves.
+License: GPL-3
+Imports:
+    tidyverse,
+    bbmle,
+    pbapply
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1

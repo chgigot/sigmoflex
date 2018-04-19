@@ -2,10 +2,48 @@
 % Please edit documentation in R/sigmoflex.R
 \name{sigmoflex}
 \alias{sigmoflex}
-\title{Sigmoflex main function}
+\alias{sigmoflex_helper}
+\title{Sigmoflex}
 \usage{
-sigmoflex(x)
+sigmoflex(data, reference, ..., threads = 1)
+
+sigmoflex_helper()
+}
+\arguments{
+\item{data}{A data frame with 3 columns in the following order: the labels of
+the data sets, the dates of the records, and the observation values (only on
+a 0-1 scale at the moment).}
+
+\item{reference}{The label of the reference data set.}
+
+\item{...}{Additional arguments to be passed to other methods.}
+
+\item{threads}{Number of threads to perform the computations.}
 }
 \description{
-TODO
+Implementation of a proposal to quantify the differences between disease
+progress curves of different data sets. In a nutshell, the method can be
+divided into several steps. First, a reference data set must be chosen and a
+model is fitted to it. Then for each other data set, the points are moved
+along the x-axis (time axis), under some constraints, until the fitted model
+match as well as possible the reference model. The relative movements of the
+points are totally captured by two parameters, a and b, which correspond to
+the translation and "streching" parameters. Use \code{sigmoflex_helper} for a
+visual interpretation of a and b.
+}
+\examples{
+# An example data frame to play with:
+head(dummy_data)
+str(dummy_data)
+
+res <- sigmoflex(dummy_data, "641")
+res
+plot(res)
+
+summary_res <- summary(res)
+summary_res
+plot(summary_res)
+
+sigmoflex_helper()
+
 }
