@@ -1,7 +1,7 @@
 Package: sigmoflex
 Type: Package
 Title: Proposal to Quantify Differences Between Disease Progress Curves
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person("Christophe", "Gigot", email = "ch.gigot@gmail.com",
     role = c("aut", "cre"), comment = c(ORCID = "0000-0002-1748-2902")))

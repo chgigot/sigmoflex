@@ -19,7 +19,7 @@ NULL
 #' @param data A data frame with 3 columns in the following order: the labels of
 #' the data sets, the dates of the records, and the observation values (only on
 #' a 0-1 scale at the moment).
-#' @param reference The label of the reference data set.
+#' @param reference The label of the reference data set (a character string).
 #' @param ... Additional arguments to be passed to other methods.
 #' @param threads Number of threads to perform the computations.
 #'
@@ -41,11 +41,16 @@ NULL
 #' @export
 #------------------------------------------------------------------------------#
 sigmoflex <- function(data, reference, ..., threads = 1) {
+
+    # Checks and data reorganization:
     stopifnot(is.data.frame(data))
     stopifnot(ncol(data) == 3)
     colnames(data) <- c("label", "time", "obs")
     stopifnot(is.numeric(data$time) && is.numeric(data$obs))
     data$label <- as.character(data$label)
+
+    stopifnot(is.character(reference))
+    stopifnot(length(reference) == 1)
 
     # Let's compute a glm model for the reference
     ref_x   <- data[data[["label"]] == reference, ]
