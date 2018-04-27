@@ -52,6 +52,14 @@ sigmoflex <- function(data, reference, ..., threads = 1) {
     stopifnot(is.character(reference))
     stopifnot(length(reference) == 1)
 
+    ## If there is only one point in a data set, remove this data set:
+    label_table     <- table(data$label)
+    one_label_names <- names(label_table[label_table == 1])
+    if (length(one_label_names) != 0) {
+        warning("Data sets with only 1 point have been removed.")
+        data <- data[!(data$label %in% one_label_names), ]
+    }
+
     # Let's compute a glm model for the reference
     ref_x   <- data[data[["label"]] == reference, ]
     ref_glm <- glm(obs ~ time, family = quasibinomial, data = ref_x)
@@ -115,8 +123,8 @@ sigmoflex <- function(data, reference, ..., threads = 1) {
 
     # Theoretical data sets for curves:
     theo <- dplyr::bind_rows(lapply(unique(data$label), function(name) {
-        time <- seq(min(c(data$time, data$moved_time)),
-                    max(c(data$time, data$moved_time)),
+        time <- seq(min(c(data$time, data$moved_time), na.rm = TRUE),
+                    max(c(data$time, data$moved_time), na.rm = TRUE),
                     by = 0.01)
         sub_data <- dplyr::filter(data, label == name)
         if (!is.null(res_mle[[name]])) { # A missing list element returns null.
@@ -175,7 +183,7 @@ plot.sigmoflex <- function(x, type = c("all", "before_moves", "after_moves"),
             geom_hline(yintercept = c(0, 1), linetype = "dashed",
                        col = "grey") +
             annotate("text",
-                     x = min(c(x$data$time, x$data$moved_time)),
+                     x = min(c(x$data$time, x$data$moved_time), na.rm = TRUE),
                      y = max(x$data$obs), label = "Before moves",
                      size = 8, hjust = "left", vjust = "top") +
             theme_bw()
@@ -195,7 +203,7 @@ plot.sigmoflex <- function(x, type = c("all", "before_moves", "after_moves"),
             geom_hline(yintercept = c(0, 1), linetype = "dashed",
                        col = "grey") +
             annotate("text",
-                     x = min(c(x$data$time, x$data$moved_time)),
+                     x = min(c(x$data$time, x$data$moved_time), na.rm = TRUE),
                      y = max(x$data$obs), label = "After moves",
                      size = 8, hjust = "left", vjust = "top") +
             theme_bw()

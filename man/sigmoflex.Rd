@@ -14,7 +14,7 @@ sigmoflex_helper()
 the data sets, the dates of the records, and the observation values (only on
 a 0-1 scale at the moment).}
 
-\item{reference}{The label of the reference data set (A character string).}
+\item{reference}{The label of the reference data set (a character string).}
 
 \item{...}{Additional arguments to be passed to other methods.}
 
